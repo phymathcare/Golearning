@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গো-লার্নিং অনলাইন প্লাটফর্ম</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #5D5FEF;
+            --secondary-color: #4F46E5;
+            --accent-color: #F59E0B;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --bg-light: #F9FAFB;
+        }
+        
+        body {
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -50%;
+            width: 50%;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            padding: 20px;
+        }
+        
+        .mobile-nav.active {
+            transform: translateX(100%);
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+            margin-top: 40px;
+        }
+        
+        .mobile-nav-links li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 30px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-left: 15px;
+        }
+        
+        .social-icons a {
+            color: var(--primary-color);
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Courses Section */
+        .courses {
+            padding: 60px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        
+        .course-info {
+            padding: 20px;
+        }
+        
+        .course-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .course-info p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .rating {
+    display: none;
+}
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+        }
+        
+        /* Teachers Section */
+        .teachers {
+            padding: 60px 0;
+            background-color: var(--bg-light);
+        }
+        
+        .teacher-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .teacher-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .teacher-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .teacher-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid
+            var(--primary-color);
+            box-shadow: 0 0 15px #5D5FEF, 
+                0 0 25px rgba(93, 95, 239, 0.5); 
+    transition: box-shadow 0.3s ease; 
+    
+        }
+        
+        @keyframes glow {
+    0% { box-shadow: 0 0 10px #5D5FEF; }
+    50% { box-shadow: 0 0 25px #5D5FEF; }
+    100% { box-shadow: 0 0 10px #5D5FEF; }
+}
+
+.teacher-img {
+    animation: glow 2s infinite;
+}
+        
+        .teacher-card h3 {
+            margin-bottom: 5px;
+        }
+        
+        .teacher-subject {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .teacher-bio {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .teacher-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .teacher-social a {
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        
+        .teacher-social a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        .contact-form textarea {
+            height: 120px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .social-icons {
+                margin-left: 0;
+                justify-content: center;
+            }
+            
+            .mobile-nav {
+                width: 80%;
+                left: -80%;
+            }
+            
+            .logo h2 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <h2>Go Learning</h2>
+            
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="course.html">Free Courses</a></li>
+                    <li><a href="blank.html">Paid Courses</a></li>
+                    <li><a href="mcq.html">MCQ Practice</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="btn btn-primary">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-btn" id="closeNav">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="course.html">Free Courses</a></li>
+            <li><a href="blank.html">Paid Courses</a></li>
+            <li><a href="mcq.html">MCQ Practice</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Learn Anytime, Anywhere with Go Learning</h1>
+                    <p>ইন্টারেক্টিভ ডাউট সলভ, প্র্যাকটিস কোশ্চেন এবং ক্লাস নোটের মাধ্যমে তোমার একাডেমিক লাইফে বস হয়ে উঠো</p>
+                    <div class="hero-buttons">
+                        <a href="course.html" class="btn btn-primary">Mcq practice</a>
+                        <div class="social-icons">
+                            <a href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://t.me/yourchannel" target="_blank"><i class="fab fa-telegram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/storage/emulated/0/Pictures/Picsart/Picsart_25-06-04_15-05-19-982.jpg" alt="Students Learning Online">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Go Learning?</h2>
+                <p>আমরা তোমাদেরকে দিব বেস্ট একটা সাপোর্ট</p>
+            </div>
+            <div class="feature-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3> doubts solve</h3>
+                    <p>তোমার সমস্যার সমাধান এর জন্য রয়েছে বেস্ট মেন্টর প্যানেল</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Important Notes</h3>
+                    <p>পরীক্ষার আগের রাতে হ্যান্ড নোটস দেখে মুহূর্তেই শেষ করো চ্যাপ্টার</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Practice Questions</h3>
+                    <p>তোমাদের জন্য রয়েছে হাজারো mcq কোশ্চেন ও সলভ</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>এক্সাম শেষ আমার প্রোভাইড করব রির্পোট কার্ড</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teachers Section -->
+    <section class="teachers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Founder</h2>
+                <p></p>
+            </div>
+            <div class="teacher-cards">
+                <!-- Teacher 1 -->
+                <div class="teacher-card">
+                    <img src="shantorpic.png" alt="Teacher" class="teacher-img">
+                    <h3>Shariar Rahman Shanto</h3>
+                    <p class="teacher-subject">𝗛𝗦𝗖-𝟮𝟳</p>
+                    <p class="teacher-bio">Physics expert</p>
+                    <div class="teacher-social">
+                        <a href="https://www.facebook.com/share/1CSHpHq3Uy/"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:shantorahmanhsc@gmail.com"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Teacher 2 -->
+                <div class="teacher-card">
+                    <img src="Facebook_creation_6F4413CD-EDBD-48B6-B150-6498887B8014.jpeg" alt="Teacher" class="teacher-img">
+                    <h3>Sakib Al Hasan</h3>
+                    <p class="teacher-subject">𝗛𝗦𝗖-𝟮𝟳</p>
+                    <p class="teacher-bio">Chemistry Expert</p>
+                    <div class="teacher-social">
+                        <a href="https://www.facebook.com/share/16SvZSro5G/"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:shakibalhassa09@gmail.com"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Teacher 3 -->
+                <div class="teacher-card">
+                    <img src="20250602_185652.png" alt="Teacher" class="teacher-img">
+                    <h3>Rohan Sheikh</h3>
+                    <p class="teacher-subject">𝗛𝗦𝗖-𝟮𝟳</p>
+                    <p class="teacher-bio">Math Expert</p>
+                    <div class="teacher-social">
+                        <a href="https://www.facebook.com/share/1C7vcZY1xf/"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto: rohansheikhnew2.0@gmail.com"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <!-- Teacher 4 -->
+                <div class="teacher-card">
+                    <img src="Picsart_25-06-04_23-50-05-378.jpg" alt="Teacher" class="teacher-img">
+                    <h3>Habibur Rahman</h3>
+                    <p class="teacher-subject">𝗛𝗦𝗖-𝟮𝟳</p>
+                    <p class="teacher-bio">Biology Expert</p>
+                    <div class="teacher-social">
+                        <a href="https://www.facebook.com/groups/1443266727117753/"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/channel/UCPAupeSr5Tnbeghjs-HAEaA"><i class="fab fa-youtube"></i></a>
+                        <a href="mailto:habiburrhhaman@gmail.com"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>তোমাদের যেকোনো সমস্যায় আমাদের ফেসবুক গ্রুপে অথবা ভাইয়াদেরকে ম্যাসেজ করে জানাতে পারো</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Our Office</h3>
+                    <p><i class="fas fa-map-marker-alt"></i>24/7 Help Support </p>
+                    <p><i class="fas fa-phone"></i> +880132152**28</p>
+                    <p><i class="fas fa-envelope"></i> Golearning@gmail.com</p>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <input type="text" placeholder="তোমার নাম" required>
+                        <input type="email" placeholder="তোমার ইমেইল" required>
+                        <input type="text" placeholder="বিষয়">
+                        <textarea placeholder="তোমার ম্যাসেজ" required></textarea>
+                        <button type="submit" class="btn btn-primary">ম্যাসেজ পাঠাও</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1 -->
+                <div class="footer-col">
+                    <h3>Go Learning</h3>
+                    <p>Bangladesh's leading online learning platform for SSC</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div class="footer-col">
+                    <h3>Courses</h3>
+                    <ul class="footer-links">
+                        <li><a href="free-courses.html">Free Courses</a></li>
+                        <li><a href="paid-courses.html">Paid Courses</a></li>
+                        <li><a href="mcq-practice.html">MCQ Practice</a></li>
+                        <li><a href="#">ssc board Exam</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p> created by Rohan &copy; 2025 Go Learning </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const closeBtn = document.getElementById('closeNav');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeBtn.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close mobile menu when clicking on a link
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Smooth scrolling for Explore Courses button
+        document.querySelector('a[href="#popular-courses"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#popular-courses').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for Contact link
+        document.querySelector('a[href="#contact"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
